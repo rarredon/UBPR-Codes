@@ -44,6 +44,7 @@ def main(argv):
             if line == 'SECTION':
                 sectionline = guide.readline().strip()
                 sectionnoline = guide.readline().strip()
+                sectionnoline += 'F' if 'Fiduciary' in sectionline else ''
                 lineno += 2
                 if sectionline != section or sectionnoline != sectionno:
                     # Update section
@@ -55,6 +56,7 @@ def main(argv):
                     csvwriter.writerow([section, sectionno, subsection,
                                         conceptid, conceptname,
                                         description, narrative, formula])
+
                 # Continue with SUBSECTION or continue with previous status
                 continue
             elif line == 'REFERENCE':
@@ -87,9 +89,7 @@ def main(argv):
                     # If line begins with float, let's assume new concept
                     try:
                         newconceptno = float(line.split()[0])
-                        newconcept = (newconceptno == (conceptno + 1.0)
-                                      or newconceptno == (conceptno + 0.1))
-                        if newconcept:
+                        if newconceptno == (conceptno + 0.1):
                             status = 'NEWCONCEPT'  # New concept on no error
                     except ValueError:
                         pass  # Continuing with formula
@@ -106,6 +106,7 @@ def main(argv):
                 status = 'SECTIONNO'
             elif status == 'SECTIONNO':  # Get section number
                 sectionno = line
+                sectionno += 'F' if 'Fiduciary' in section else ''
                 status = 'SUBSECTION'
             elif status == 'SUBSECTION':  # Get subsection
                 line = line.split()
@@ -145,6 +146,7 @@ def build_reference(outfile, guide, section, sectionno, lineno):
             if line == 'SECTION':
                 sectionline = guide.readline().strip()
                 sectionnoline = guide.readline().strip()
+                sectionnoline += 'F' if 'Fiduciary' in sectionline else ''
                 lineno += 2
                 if sectionline != section or sectionnoline != sectionno:
                     # New section, write last concept, return control to caller
