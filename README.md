@@ -1,5 +1,5 @@
 # UBPR-Codes
-Program to parse UBPR concept codes [published by the FFIEC](https://cdr.ffiec.gov/Public/DownloadUBPRUserGuide.aspx).
+Program to parse UBPR concept codes from PDF files [published by the FFIEC](https://cdr.ffiec.gov/Public/DownloadUBPRUserGuide.aspx).
 
 To run:
 
