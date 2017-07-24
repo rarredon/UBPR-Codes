@@ -5,6 +5,7 @@ import csv
 
 concept_labels = ['DESCRIPTION', 'NARRATIVE', 'FORMULA']
 
+
 def main(argv):
     infile = argv[1]
     outfile = argv[2]
@@ -51,7 +52,7 @@ def main(argv):
                     section = sectionline
                     sectionno = sectionnoline
                     status = 'SUBSECTION'
-                    
+
                     # Write out the last concept from previous section
                     csvwriter.writerow([section, sectionno, subsection,
                                         conceptid, conceptname,
@@ -132,8 +133,9 @@ def main(argv):
                 narrative += line
             elif status == 'FORMULA':
                 formula += line
-            #END IF (reaction to status)
-        
+            # END IF (reaction to status)
+
+
 def build_reference(outfile, guide, section, sectionno, lineno):
     with open(outfile, 'a', newline='') as f:
         refwriter = csv.writer(f)
@@ -166,12 +168,12 @@ def build_reference(outfile, guide, section, sectionno, lineno):
                 if status != 'FORMULA':
                     refwriter.writerow([section, sectionno, conceptname,
                                         description, narrative, formula])
-                
+
             # Get concept info
             if status == 'NEWCONCEPT':
                 description = ''
                 narrative = ''
-                formula =''
+                formula = ''
                 conceptname = line
             elif status == 'DESCRIPTION':
                 description += line
@@ -181,7 +183,6 @@ def build_reference(outfile, guide, section, sectionno, lineno):
                 formula += line
         # Executed at the end of the for loop, i.e., end of the file
         return None, None, None
-
 
 
 if __name__ == '__main__':
